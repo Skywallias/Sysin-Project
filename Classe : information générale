@@ -4,7 +4,7 @@ Public Class InfoGen
 
 "Etats
 private Names as new list of(string)
-Dim Pos as new list of(Point2D)
+private Pos as new list of(Point2D)
 
 "Get
 
