@@ -1,2 +1,33 @@
 But du code : créer une classe contenant les infos de position correspondant à un type d'objet sur la map
 
+Public Class InfoGen
+
+"Etats
+private Names as new list of(string)
+Dim Pos as new list of(Point2D)
+
+"Get
+
+Public Function GetNames() as list of(string)
+    Return Names
+End
+
+Public Function GetPos() as listof(Point2D)
+    Return Pos
+End
+
+New(byval chose as string)
+    Dim map as string(,) = radar
+    Dim k as integer = 0
+    For i = 0 to length(map) - 1
+      For j = 0 to length(map) - 1
+        if map(i,j) = chose then
+          Names.add(chose&k)
+          Pos.add(New Point2D(i,j))
+        endif
+      end
+    end
+end
+
+        
+    
