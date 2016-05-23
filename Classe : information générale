@@ -24,6 +24,7 @@ New(byval chose as string)
         if map(i,j) = chose then
           Names.add(chose&k)
           Pos.add(New Point2D(i,j))
+          k = k + 1
         endif
       end
     end
