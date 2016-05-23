@@ -1,1 +1,35 @@
+Public sub Deplacerrobot(byval numerorobot as integer, byval posfinale as point2D)
 
+Dim positionrobot as point2D = Retournerposition(numerorobot)
+Dim trajet as point2D() = calculertrajectoire(positionrobot, posfinale)
+
+For k = 0 to trajet.getlength
+  if trajet(k).X - positionrobot.X > 0
+    while numerorobot.retournerangle <> 0 do
+      rotation(90)
+    end 
+    numerorobot.avancer
+  end if
+    
+  if trajet(k).X - positionrobot.X < 0
+    while numerorobot.retournerangle <> 0 do
+      rotation(90)
+    end
+    numerorobot.avancer
+  end if
+  
+  if trajet(k).Y - positionrobot.Y > 0 
+    while numerorobot.retournerangle <> 0 do
+      rotation(90)
+    end
+    numerorobot.avancer
+  end if
+  
+  if trajet(k).Y - positionrobot.Y < 0
+    while numerorobot.retournerangle <> 0 do
+      rotation(90)
+    end
+    numerorobot.avancer
+  end if
+    
+end
