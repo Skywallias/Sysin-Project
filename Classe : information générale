@@ -1,34 +1,39 @@
 But du code : créer une classe contenant les infos de position correspondant à un type d'objet sur la map
 
 Public Class InfoGen
+    Inherits Common_Robot.PlayerCommon
+    'Etats
+    Private Names As New List(Of String)
+    Private Pos As New List(Of Common_Robot.Point2D)
 
-"Etats
-private Names as new list of(string)
-private Pos as new list of(Point2D)
+    'Gets
 
-"Get
+    Public Function GetNames() As List(Of String)
+        Return Names
+    End Function
 
-Public Function GetNames() as list of(string)
-    Return Names
-End
 
-Public Function GetPos() as listof(Point2D)
-    Return Pos
-End
+    Public Function GetPos() As List(Of Common_Robot.Point2D)
+        Return Pos
+    End Function
 
-New(byval chose as string)
-    Dim map as string(,) = radar
-    Dim k as integer = 0
-    For i = 0 to length(map) - 1
-      For j = 0 to length(map) - 1
-        if map(i,j) = chose then
-          Names.add(chose&k)
-          Pos.add(New Point2D(i,j))
-          k = k + 1
-        endif
-      end
-    end
-end
+
+    Public Sub New(ByVal chose As String)
+        Dim map As String(,) = Me.Radar()
+        Dim k As Integer = 0
+        For i = 0 To map.Length - 1
+            For j = 0 To map.Length - 1
+                If map(i, j) = chose Then
+                    Names.Add(chose & "k")
+                    Pos.Add(New Common_Robot.Point2D(i, j))
+                    k = k + 1
+                End If
+            Next
+        Next
+    End Sub
+
+
+End Class
 
         
     
