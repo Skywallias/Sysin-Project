@@ -22,7 +22,7 @@ Dim listetrajet As New List(Of Common_Robot.Point2D)
     else Deplacerrobot(robot, New Point2D(positiontruc.X,positiontruc.Y + 1))
   End if
   
-  listetrajet = Deplacerrobot()
+  listetrajet = Deplacerrobot(robot, positiontruc)
   
   return listetrajet
   
