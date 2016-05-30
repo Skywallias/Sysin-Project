@@ -1,0 +1,29 @@
+
+ 
+Public function chemin(Byval robot as integer, Byval truc as string) as List(of Common_Robot.Point2D)
+ 
+Dim positionrobot As Common_Robot.Point2D = RetournerPosition() 
+Dim positiontruc As Common_Robot.Point2D = RetournerPosition(truc)
+Dim listetrajet As New List(Of Common_Robot.Point2D)
+
+  If Me.radar(positiontruc.X - 1,positiontruc.Y) <> "" then nothing
+    else Deplacerrobot(robot, New Point2D(positiontruc.X - 1,positiontruc.Y))
+  End if
+  
+  If Me.radar(positiontruc.X + 1, positiontruc.Y) <> "" then nothing
+    else Deplacerrobot(robot, New Point2D(positiontruc.X + 1,positiontruc.Y))
+  End if
+  
+  If Me.radar(positiontruc.X, positiontruc.Y - 1) <> "" then nothing
+    else Deplacerrobot(robot, New Point2D(positiontruc.X,positiontruc.Y - 1))
+  End if
+  
+  If Me.radar(positiontruc.X, positiontruc.Y + 1) <> "" then nothing
+    else Deplacerrobot(robot, New Point2D(positiontruc.X,positiontruc.Y + 1))
+  End if
+  
+  listetrajet = Deplacerrobot()
+  
+  return listetrajet
+  
+  End function
