@@ -6,7 +6,6 @@ Public Sub Deplacerrobot(ByVal numerorobot As Integer, ByVal posfinale As Common
 
         For k = 0 To trajet.Count() - 1
 
-
             If trajet(k).X - positionrobot.X > 0 Then
                 While Me.RetournerAngle() <> 0
                     Me.Rotation(90)
@@ -40,7 +39,5 @@ Public Sub Deplacerrobot(ByVal numerorobot As Integer, ByVal posfinale As Common
             End If
 
         Next
-        ' Le retour d'un message est OBLIGATOIRE afin de faciliter le développement
-
     End Sub
 End Class
