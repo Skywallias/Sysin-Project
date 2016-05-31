@@ -1,0 +1,25 @@
+    Public Sub RotationDemandee(ByVal PosCase As Common_Robot.Point2D, ByVal PosRobot As Common_Robot.Point2D)
+        If PosCase.X - PosRobot.X > 0 Then
+            While Me.RetournerAngle() <> 0
+                Me.Rotation(90)
+            End While
+        End If
+
+        If PosCase.X - PosRobot.X < 0 Then
+            While Me.RetournerAngle() <> 180
+                Me.Rotation(90)
+            End While
+        End If
+
+        If PosCase.Y - PosRobot.Y > 0 Then
+            While Me.RetournerAngle() <> 270
+                Me.Rotation(90)
+            End While
+        End If
+
+        If PosCase.Y - PosRobot.Y < 0 Then
+            While Me.RetournerAngle() <> 90
+                Me.Rotation(90)
+            End While
+        End If
+    End Sub
