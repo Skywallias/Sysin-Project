@@ -1,4 +1,4 @@
-    Public Function DefinirCommande(ByVal robot As Integer, ByVal mission As String(,))
+    Public Function DefinirCommande(ByVal mission As String(,)) As List(Of Common_Robot.Point2D)
 
         Dim ObjetsUtiles As New List(Of Common_Robot.Point2D)
 
@@ -6,11 +6,11 @@
         Dim CheminMachineExpedition As New List(Of Common_Robot.Point2D)
         Dim CheminExpeditionBrut As New List(Of Common_Robot.Point2D)
 
-        Dim Produit As String = mission(1, 2)
+        Dim Produit As String = mission(1, 0)
         Dim Machines As New InfoGen("Machine")
         Dim MachineAUtiliser As New Common_Robot.Point2D(0, 0)
         For i = 0 To Machines.GetNames().Count - 1
-            If Me.InfosPrecises(Machines.GetPos()(i), "Gamme")(0, 0) = Produit Then
+            If Me.InfosPrecises(Machines.GetPos()(i), "Gamme")(0, 2) = Produit Then
                 MachineAUtiliser = Machines.GetPos()(i)
             End If
         Next
