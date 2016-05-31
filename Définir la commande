@@ -1,0 +1,47 @@
+    Public Function DefinirCommande(ByVal mission As String(,)) As List(Of Common_Robot.Point2D)
+
+        Dim ObjetsUtiles As New List(Of Common_Robot.Point2D)
+
+        Dim CheminBrutMachine As New List(Of Common_Robot.Point2D)
+        Dim CheminMachineExpedition As New List(Of Common_Robot.Point2D)
+        Dim CheminExpeditionBrut As New List(Of Common_Robot.Point2D)
+
+        Dim Produit As String = mission(1, 0)
+        Dim Machines As New InfoGen("Machine")
+        Dim MachineAUtiliser As New Common_Robot.Point2D(0, 0)
+        For i = 0 To Machines.GetNames().Count - 1
+            If Me.InfosPrecises(Machines.GetPos()(i), "Gamme")(0, 2) = Produit Then
+                MachineAUtiliser = Machines.GetPos()(i)
+            End If
+        Next
+
+        Dim StockBrut As New InfoGen("Stock Brut")
+        Dim StockBrutAUtiliser As New Common_Robot.Point2D(0, 0)
+        Dim j As Integer = 0
+        Dim Min As Integer = 2 ^ (1 / 2) * (Me.Radar().GetLength(0) - 1)
+        For i = 0 To StockBrut.GetNames().Count - 1
+            If ((MachineAUtiliser.X - StockBrut.GetPos()(i).X) ^ 2 + ((MachineAUtiliser.Y - StockBrut.GetPos()(i).Y) ^ 2) ^ (1 / 2)) < Min Then
+                Min = ((MachineAUtiliser.X - StockBrut.GetPos()(i).X) ^ 2 + ((MachineAUtiliser.Y - StockBrut.GetPos()(i).Y) ^ 2) ^ (1 / 2))
+                j = i
+            End If
+        Next
+        StockBrutAUtiliser = StockBrut.GetPos()(j)
+
+        Dim StockExp As New InfoGen("Stock Expédition")
+        Dim StockExpAUtiliser As New Common_Robot.Point2D(0, 0)
+        Min = 2 ^ (1 / 2) * (Me.Radar().GetLength(0) - 1)
+        For i = 0 To StockExp.GetNames().Count - 1
+            If ((MachineAUtiliser.X - StockExp.GetPos()(i).X) ^ 2 + ((MachineAUtiliser.Y - StockExp.GetPos()(i).Y) ^ 2) ^ (1 / 2)) < Min Then
+                Min = ((MachineAUtiliser.X - StockExp.GetPos()(i).X) ^ 2 + ((MachineAUtiliser.Y - StockExp.GetPos()(i).Y) ^ 2) ^ (1 / 2))
+                j = i
+            End If
+        Next
+        StockExpAUtiliser = StockExp.GetPos()(j)
+
+        ObjetsUtiles.Add(StockBrutAUtiliser)
+        ObjetsUtiles.Add(StockExpAUtiliser)
+        ObjetsUtiles.Add(MachineAUtiliser)
+
+        Return ObjetsUtiles
+
+    End Function
