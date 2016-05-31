@@ -1,4 +1,7 @@
-    Public Sub DefinirCommande(ByVal robot As Integer, ByVal mission As String(,))
+    Public Function DefinirCommande(ByVal robot As Integer, ByVal mission As String(,))
+
+        Dim ObjetsUtiles As New List(Of Common_Robot.Point2D)
+
         Dim CheminBrutMachine As New List(Of Common_Robot.Point2D)
         Dim CheminMachineExpedition As New List(Of Common_Robot.Point2D)
         Dim CheminExpeditionBrut As New List(Of Common_Robot.Point2D)
@@ -17,8 +20,8 @@
         Dim j As Integer = 0
         Dim Min As Integer = 2 ^ (1 / 2) * (Me.Radar().GetLength(0) - 1)
         For i = 0 To StockBrut.GetNames().Count - 1
-    If ((MachineAUtiliser.X - StockBrut.getPos()(i).X)^2 + ((MachineAUtiliser.Y _ StockBrut.getPos()(i).Y)^2)^(1/2) < Min then
-      Min = ((MachineAUtiliser.X - StockBrut.getPos()(i).X)^2 + ((MachineAUtiliser.Y _ StockBrut.getPos()(i).Y)^2)^(1/2)
+            If ((MachineAUtiliser.X - StockBrut.GetPos()(i).X) ^ 2 + ((MachineAUtiliser.Y - StockBrut.GetPos()(i).Y) ^ 2) ^ (1 / 2)) < Min Then
+                Min = ((MachineAUtiliser.X - StockBrut.GetPos()(i).X) ^ 2 + ((MachineAUtiliser.Y - StockBrut.GetPos()(i).Y) ^ 2) ^ (1 / 2))
                 j = i
             End If
         Next
@@ -28,10 +31,17 @@
         Dim StockExpAUtiliser As New Common_Robot.Point2D(0, 0)
         Min = 2 ^ (1 / 2) * (Me.Radar().GetLength(0) - 1)
         For i = 0 To StockExp.GetNames().Count - 1
-    If ((MachineAUtiliser.X - StockExp.getPos()(i).X)^2 + ((MachineAUtiliser.Y _ StockExp.getPos()(i).Y)^2)^(1/2) < Min then
-      Min = ((MachineAUtiliser.X - StockExp.getPos()(i).X)^2 + ((MachineAUtiliser.Y _ StockExp.getPos()(i).Y)^2)^(1/2)
+            If ((MachineAUtiliser.X - StockExp.GetPos()(i).X) ^ 2 + ((MachineAUtiliser.Y - StockExp.GetPos()(i).Y) ^ 2) ^ (1 / 2)) < Min Then
+                Min = ((MachineAUtiliser.X - StockExp.GetPos()(i).X) ^ 2 + ((MachineAUtiliser.Y - StockExp.GetPos()(i).Y) ^ 2) ^ (1 / 2))
                 j = i
             End If
         Next
         StockExpAUtiliser = StockExp.GetPos()(j)
-    End Sub
+
+        ObjetsUtiles.Add(StockBrutAUtiliser)
+        ObjetsUtiles.Add(StockExpAUtiliser)
+        ObjetsUtiles.Add(MachineAUtiliser)
+
+        Return ObjetsUtiles
+
+    End Function
