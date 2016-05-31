@@ -1,9 +1,8 @@
-    Public Sub Deplacerrobot(ByVal trajet As List(Of Common_Robot.Point2D), ByVal k As Integer)
+ Public Sub Deplacerrobot(ByVal Destination As Common_Robot.Point2D)
 
         Dim positionrobot As Common_Robot.Point2D = RetournerPosition()
-        Dim ProchaineCase As Common_Robot.Point2D = trajet(trajet.Count - 1)
 
-        RotationDemandee(ProchaineCase, positionrobot)
+        RotationDemandee(Destination, positionrobot)
 
         Me.Avancer()
     End Sub
