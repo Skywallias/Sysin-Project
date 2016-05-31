@@ -1,0 +1,24 @@
+Public Function VraiPositionUtile(ByVal trajet As List(Of Common_Robot.Point2D), ByVal k As Integer) As Common_Robot.Point2D
+
+        Dim PositionUtile As Common_Robot.Point2D
+
+
+        If Me.Radar(trajet(k).X - 1, trajet(k).Y) = "" Then
+            PositionUtile = New Common_Robot.Point2D(trajet(k).X - 1, trajet(k).Y)
+            Return PositionUtile
+        End If
+
+        If Me.Radar(trajet(k).X + 1, trajet(k).Y) = "" Then
+            PositionUtile = New Common_Robot.Point2D(trajet(k).X + 1, trajet(k).Y)
+            Return PositionUtile
+        End If
+
+        If Me.Radar(trajet(k).X, trajet(k).Y - 1) = "" Then
+            PositionUtile = New Common_Robot.Point2D(trajet(k).X, trajet(k).Y - 1)
+            Return PositionUtile
+        End If
+
+        PositionUtile = New Common_Robot.Point2D(trajet(k).X, trajet(k).Y + 1)
+        Return PositionUtile
+
+    End Function
