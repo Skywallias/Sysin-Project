@@ -1,0 +1,49 @@
+Public Function Deplacerrobot(ByVal numerorobot As Integer, ByVal posfinale As Common_Robot.Point2D) As List(Of Common_Robot.Point2D)
+
+        Dim positionrobot As Common_Robot.Point2D = RetournerPosition()
+        Dim trajet As System.Collections.Generic.List(Of Common_Robot.Point2D) = CalculerTrajectoire(positionrobot, posfinale)
+        Dim k As Integer
+        Dim listecase As New List(Of Common_Robot.Point2D)
+
+        For i = 0 To trajet.Count - 1
+            listecase.Add(New Common_Robot.Point2D(trajet(i).X, trajet(i).Y))
+        Next
+
+        For k = 0 To trajet.Count() - 1
+
+            If trajet(k).X - positionrobot.X > 0 Then
+                While Me.RetournerAngle() <> 0
+                    Me.Rotation(90)
+                End While
+
+                Me.Avancer()
+            End If
+
+            If trajet(k).X - positionrobot.X < 0 Then
+                While Me.RetournerAngle() <> 0
+                    Me.Rotation(90)
+                End While
+
+                Me.Avancer()
+            End If
+
+            If trajet(k).Y - positionrobot.Y > 0 Then
+                While Me.RetournerAngle() <> 0
+                    Me.Rotation(90)
+                End While
+
+                Me.Avancer()
+            End If
+
+            If trajet(k).Y - positionrobot.Y < 0 Then
+                While Me.RetournerAngle() <> 0
+                    Me.Rotation(90)
+                End While
+
+                Me.Avancer()
+            End If
+
+        Next
+        Return listecase
+    End Function
+End Class
