@@ -1,38 +1,9 @@
-
-    Public Sub Deplacerrobot(ByVal numerorobot As Integer, ByVal trajet As List(Of Common_Robot.Point2D), ByVal k As Integer)
+    Public Sub Deplacerrobot(ByVal trajet As List(Of Common_Robot.Point2D), ByVal k As Integer)
 
         Dim positionrobot As Common_Robot.Point2D = RetournerPosition()
-        If Radar(trajet(k).X, trajet(k).Y) = "" Then
-            If trajet(k).X - positionrobot.X > 0 Then
-                While Me.RetournerAngle() <> 0
-                    Me.Rotation(90)
-                End While
+        Dim ProchaineCase As Common_Robot.Point2D = trajet(trajet.Count - 1)
 
-                Me.Avancer()
-            End If
+        RotationDemandee(ProchaineCase, positionrobot)
 
-            If trajet(k).X - positionrobot.X < 0 Then
-                While Me.RetournerAngle() <> 0
-                    Me.Rotation(90)
-                End While
-
-                Me.Avancer()
-            End If
-
-            If trajet(k).Y - positionrobot.Y > 0 Then
-                While Me.RetournerAngle() <> 0
-                    Me.Rotation(90)
-                End While
-
-                Me.Avancer()
-            End If
-
-            If trajet(k).Y - positionrobot.Y < 0 Then
-                While Me.RetournerAngle() <> 0
-                    Me.Rotation(90)
-                End While
-
-                Me.Avancer()
-            End If
-        End If
+        Me.Avancer()
     End Sub
