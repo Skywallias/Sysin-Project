@@ -1,29 +1,24 @@
+Public Function VraiPositionUtile(ByVal trajet As List(Of Common_Robot.Point2D), ByVal k As Integer) As Common_Robot.Point2D
 
- 
-Public function chemin(Byval robot as integer, Byval truc as string) as List(of Common_Robot.Point2D)
- 
-Dim positionrobot As Common_Robot.Point2D = RetournerPosition() 
-Dim positiontruc As Common_Robot.Point2D = RetournerPosition(truc)
-Dim listetrajet As New List(Of Common_Robot.Point2D)
+        Dim PositionUtile As Common_Robot.Point2D
 
-  If Me.radar(positiontruc.X - 1,positiontruc.Y) <> "" then nothing
-    else Deplacerrobot(robot, New Point2D(positiontruc.X - 1,positiontruc.Y))
-  End if
-  
-  If Me.radar(positiontruc.X + 1, positiontruc.Y) <> "" then nothing
-    else Deplacerrobot(robot, New Point2D(positiontruc.X + 1,positiontruc.Y))
-  End if
-  
-  If Me.radar(positiontruc.X, positiontruc.Y - 1) <> "" then nothing
-    else Deplacerrobot(robot, New Point2D(positiontruc.X,positiontruc.Y - 1))
-  End if
-  
-  If Me.radar(positiontruc.X, positiontruc.Y + 1) <> "" then nothing
-    else Deplacerrobot(robot, New Point2D(positiontruc.X,positiontruc.Y + 1))
-  End if
-  
-  listetrajet = Deplacerrobot(robot, positiontruc)
-  
-  return listetrajet
-  
-  End function
+
+        If Me.Radar(trajet(k).X - 1, trajet(k).Y) = "" Then
+            PositionUtile = New Common_Robot.Point2D(trajet(k).X - 1, trajet(k).Y)
+            Return PositionUtile
+        End If
+
+        If Me.Radar(trajet(k).X + 1, trajet(k).Y) = "" Then
+            PositionUtile = New Common_Robot.Point2D(trajet(k).X + 1, trajet(k).Y)
+            Return PositionUtile
+        End If
+
+        If Me.Radar(trajet(k).X, trajet(k).Y - 1) = "" Then
+            PositionUtile = New Common_Robot.Point2D(trajet(k).X, trajet(k).Y - 1)
+            Return PositionUtile
+        End If
+
+        PositionUtile = New Common_Robot.Point2D(trajet(k).X, trajet(k).Y + 1)
+        Return PositionUtile
+
+    End Function
