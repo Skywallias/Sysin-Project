@@ -1,41 +1,36 @@
- Public Sub Deplacerrobot(ByVal numerorobot As Integer, ByVal trajet As List(Of Common_Robot.Point2D))
+Public Sub Deplacerrobot(ByVal numerorobot As Integer, ByVal trajet As List(Of Common_Robot.Point2D), ByVal k As Integer)
 
         Dim positionrobot As Common_Robot.Point2D = RetournerPosition()
-        Dim k As Integer
 
-        For k = 0 To trajet.Count() - 1
+        If trajet(k).X - positionrobot.X > 0 Then
+            While Me.RetournerAngle() <> 0
+                Me.Rotation(90)
+            End While
 
-            If trajet(k).X - positionrobot.X > 0 Then
-                While Me.RetournerAngle() <> 0
-                    Me.Rotation(90)
-                End While
+            Me.Avancer()
+        End If
 
-                Me.Avancer()
-            End If
+        If trajet(k).X - positionrobot.X < 0 Then
+            While Me.RetournerAngle() <> 0
+                Me.Rotation(90)
+            End While
 
-            If trajet(k).X - positionrobot.X < 0 Then
-                While Me.RetournerAngle() <> 0
-                    Me.Rotation(90)
-                End While
+            Me.Avancer()
+        End If
 
-                Me.Avancer()
-            End If
+        If trajet(k).Y - positionrobot.Y > 0 Then
+            While Me.RetournerAngle() <> 0
+                Me.Rotation(90)
+            End While
 
-            If trajet(k).Y - positionrobot.Y > 0 Then
-                While Me.RetournerAngle() <> 0
-                    Me.Rotation(90)
-                End While
+            Me.Avancer()
+        End If
 
-                Me.Avancer()
-            End If
+        If trajet(k).Y - positionrobot.Y < 0 Then
+            While Me.RetournerAngle() <> 0
+                Me.Rotation(90)
+            End While
 
-            If trajet(k).Y - positionrobot.Y < 0 Then
-                While Me.RetournerAngle() <> 0
-                    Me.Rotation(90)
-                End While
-
-                Me.Avancer()
-            End If
-
-        Next
+            Me.Avancer()
+        End If
     End Sub
