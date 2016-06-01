@@ -1,0 +1,46 @@
+  Dim numeroGamme As String(,) = RenduGamme(OUGamme)
+        Dim PositionsUtile As List(Of Common_Robot.Point2D) = DefinirCommande(numeroGamme)
+
+        Select Case Etape
+
+            Case "Calculer Trajectoire"
+                If But = "Brut" Then
+                    Dim PositionUtile As Common_Robot.Point2D = VraiPositionUtile(PositionsUtile(0))
+                    Trajectoire = CalculerTrajectoire(Me.RetournerPosition, PositionUtile)
+                    Etape = "Déplacement"
+                End If
+                If But = "Machine" Then
+                    Dim PositionUtile As Common_Robot.Point2D = VraiPositionUtile(PositionsUtile(1))
+                    Trajectoire = CalculerTrajectoire(Me.RetournerPosition, PositionUtile)
+                    Etape = "Déplacement"
+                End If
+                If But = "Exp" Then
+                    Dim PositionUtile As Common_Robot.Point2D = VraiPositionUtile(PositionsUtile(2))
+                    Trajectoire = CalculerTrajectoire(Me.RetournerPosition, PositionUtile)
+                    Etape = "Déplacement"
+                End If
+
+            Case "Déplacement"
+                Deplacerrobot(Trajectoire(compteur))
+                compteur = compteur + 1
+                If compteur = Trajectoire.Count - 1 Then
+                    Etape = "Déplacement Réussi"
+                End If
+
+            Case "DéplacementRéussi"
+                If But = "brut" Then
+                    Me.Ramasser()
+                    But = "Machine"
+                    Etape = "Calculer trajectoire"
+                Else
+                    If But = "Machine" Then
+                        RotationDemandee(PositionsUtile(1), Me.RetournerPosition)
+                        Me.Deposer()
+
+                        But = "Exp"
+
+                    Else
+                        But = "Brut"
+                    End If
+                End If
+        End Select
