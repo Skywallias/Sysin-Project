@@ -1,46 +1,131 @@
-  Dim numeroGamme As String(,) = RenduGamme(OUGamme)
-        Dim PositionsUtile As List(Of Common_Robot.Point2D) = DefinirCommande(numeroGamme)
-
+ Dim Gamme As String(,) = RenduGamme(QuelleGamme)
+        Dim PositionsUtile As List(Of Common_Robot.Point2D) = DefinirCommande(Gamme)
+        If ini = 0 Then
+            PositionInitiale = Me.RetournerPosition
+            ini = 1
+        End If
         Select Case Etape
 
-            Case "Calculer Trajectoire"
-                If But = "Brut" Then
-                    Dim PositionUtile As Common_Robot.Point2D = VraiPositionUtile(PositionsUtile(0))
-                    Trajectoire = CalculerTrajectoire(Me.RetournerPosition, PositionUtile)
-                    Etape = "Déplacement"
-                End If
-                If But = "Machine" Then
-                    Dim PositionUtile As Common_Robot.Point2D = VraiPositionUtile(PositionsUtile(1))
-                    Trajectoire = CalculerTrajectoire(Me.RetournerPosition, PositionUtile)
-                    Etape = "Déplacement"
-                End If
-                If But = "Exp" Then
-                    Dim PositionUtile As Common_Robot.Point2D = VraiPositionUtile(PositionsUtile(2))
-                    Trajectoire = CalculerTrajectoire(Me.RetournerPosition, PositionUtile)
-                    Etape = "Déplacement"
-                End If
+            Case "Calculer trajectoire"
+                Dim PositionUtile As New Common_Robot.Point2D(0, 0)
+                Select Case But
+
+                    Case "Brut"
+                        PositionUtile = VraiPositionUtile(PositionsUtile(0))
+                        Trajectoire = CalculerTrajectoire(Me.RetournerPosition, PositionUtile)
+                        If CompteurBoucle = 1 Then
+                            TrajectoiresUtiles.Add(Trajectoire)
+                        End If
+                        CompteurBoucle += 1
+                        Etape = "Déplacement"
+                    Case "Machine"
+                        PositionUtile = VraiPositionUtile(PositionsUtile(1))
+                        Trajectoire = CalculerTrajectoire(Me.RetournerPosition, PositionUtile)
+                        If CompteurBoucle = 1 Then
+                            TrajectoiresUtiles.Add(Trajectoire)
+                        End If
+                        Etape = "Déplacement"
+
+                    Case "Exp"
+                        PositionUtile = VraiPositionUtile(PositionsUtile(2))
+                        Trajectoire = CalculerTrajectoire(Me.RetournerPosition, PositionUtile)
+                        If CompteurBoucle = 1 Then
+                            TrajectoiresUtiles.Add(Trajectoire)
+                        End If
+                        Etape = "Déplacement"
+                    Case Else
+                        MsgBox("Le but de déplacement du robot n'est pas clairement défini")
+
+                End Select
 
             Case "Déplacement"
-                Deplacerrobot(Trajectoire(compteur))
-                compteur = compteur + 1
-                If compteur = Trajectoire.Count - 1 Then
-                    Etape = "Déplacement Réussi"
+                If CompteurBoucle = 1 Then
+                    Deplacerrobot(Trajectoire(compteur))
+                    compteur += 1
+                    If compteur = Trajectoire.Count - 1 Then
+                        Etape = "Déplacement réussi"
+                        compteur = 0
+                    End If
+                Else
+                    Select Case But
+                        Case "Brut"
+                            Deplacerrobot(TrajectoiresUtiles(2)(compteur))
+                            compteur += 1
+                            If compteur = Trajectoire.Count - 1 Then
+                                Etape = "Déplacement réussi"
+                                compteur = 0
+                            End If
+                        Case "Machine"
+                            Deplacerrobot(TrajectoiresUtiles(0)(compteur))
+                            compteur += 1
+                            If compteur = Trajectoire.Count - 1 Then
+                                Etape = "Déplacement réussi"
+                                compteur = 0
+                            End If
+                        Case "Exp"
+                            Deplacerrobot(TrajectoiresUtiles(1)(compteur))
+                            compteur += 1
+                            If compteur = Trajectoire.Count - 1 Then
+                                Etape = "Déplacement réussi"
+                                compteur = 0
+                            End If
+                    End Select
                 End If
+                
 
-            Case "DéplacementRéussi"
-                If But = "brut" Then
+            Case "Déplacement réussi"
+                If But = "Brut" Then
+                    RotationDemandee(PositionsUtile(0), Me.RetournerPosition)
                     Me.Ramasser()
                     But = "Machine"
-                    Etape = "Calculer trajectoire"
+                    If CompteurBoucle = 1 Then
+                        Etape = "Calculer trajectoire"
+                    Else
+                        Etape = "Déplacement"
+                    End If
                 Else
                     If But = "Machine" Then
                         RotationDemandee(PositionsUtile(1), Me.RetournerPosition)
                         Me.Deposer()
-
-                        But = "Exp"
-
+                        Me.ExecuterOPeration("Brut")
+                        Etape = "Opération lancée"
                     Else
-                        But = "Brut"
+                        If But = "Exp" Then
+                            RotationDemandee(PositionsUtile(2), Me.RetournerPosition)
+                            Me.Deposer()
+                            NombresProduitsFinis += 1
+                            But = "Brut"
+                            If NombresProduitsFinis = Gamme(0, 0) Then
+                                QuelleGamme += 1
+                                NombresProduitsFinis = 0
+                                CompteurBoucle = 0
+                            End If
+                            If CompteurBoucle = 1 Then
+                                Etape = "Calculer trajectoire"
+                            Else
+                                Etape = "Déplacement"
+                            End If
+                            If QuelleGamme = Gamme.GetLength(0) Then
+                                Etape = "Retourner en position initiale"
+                            End If
+                        End If
                     End If
                 End If
+            Case "Opération lancée"
+                If TempsDAttente = CInt(Me.InfosPrecises(PositionsUtile(2), "Gamme")(0, 3)) Then
+                    Me.Ramasser()
+                    If CompteurBoucle = 1 Then
+                        Etape = "Calculer trajectoire"
+                    Else
+                        Etape = "Déplacement"
+                    End If
+                    TempsDAttente = 0
+                    But = "Exp"
+                Else
+                    TempsDAttente += 1
+                End If
+            Case "Retourner en position initiale"
+                Deplacerrobot(PositionInitiale)
         End Select
+
+        Return New Common_Robot.MessageRetour(True, "Tout c'est bien déroulé")
