@@ -1,0 +1,7 @@
+Public Function RenduGamme(ByVal k As Integer) As String(,)
+        Dim Missions As String(,) = ObtenirMission()
+        Dim Mission(0, 0) As String
+        Mission(0, 0) = Missions(k, 0)
+        Mission(0, 1) = Missions(k, 1)
+        Return Mission
+    End Function
